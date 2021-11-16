@@ -8,40 +8,6 @@
  * example variants for apples ['яблуко', 'яблука', 'яблук']
  */
 
-/**
- * @param int $number
- * @param array $endingArray
- *
- * @return string
- */
-$getNumEnding = function ($number, array $endingArray)
-{
-    $number = $number % 100;
-
-    if ($number >= 11 && $number <= 19)
-    {
-        return $endingArray[2];
-    }
-
-    $i = $number % 10;
-
-    switch ($i)
-    {
-        case (1):
-            $ending = $endingArray[0];
-            break;
-        case (2):
-        case (3):
-        case (4):
-            $ending = $endingArray[1];
-            break;
-        default:
-            $ending = $endingArray[2];
-    }
-
-    return $ending;
-};
-
 return array(
     'months'            => explode('_', 'Січня_Лютого_Березня_Квітня_Травня_Червня_Липня_Серпня_Вересня_Жовтня_Листопада_Грудня'),
     'monthsNominative'  => explode('_', 'Січень_Лютий_Березень_Квітень_Травень_Червень_Липень_Серпень_Вересень_Жовтень_Листопад_Грудень'),
@@ -51,67 +17,30 @@ return array(
     'calendar'          => array(
         'sameDay'  => '[сьогодні]',
         'nextDay'  => '[завтра]',
-        'lastDay'  => '[вчора]', // or "учора". 
+        'lastDay'  => '[вчора]', // or "учора".
         'lastWeek' => 'l',
         'sameElse' => 'l',
-        'withTime' => function (\Moment\Moment $number)
-        {
-            return $number->format('G') == 11 ? '[об] H:i' : '[о] H:i';
-        },
+        'withTime' => '[о] H:i',
         'default'  => 'd-m-Y',
     ),
     'relativeTime'      => array(
 //        'future' => 'о %s', // or "об"
-        'future' => function (\Moment\Moment $number)
-        {
-            return $number->format('G') == 11 ? 'об %s' : 'о %s';
-        },
+        'future' => 'о %s',
         'past'   => '%s тому',
         's'      => 'кілька секунд',
         'ss'      => 'кілька секунд',   // needs review by native speaker see https://github.com/fightbulc/moment.php/issues/166
         'm'      => 'хвилину',
-        'mm'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d хвилину', '%d хвилини', '%d хвилин'));
-        },
+        'mm'     => '%d хвилин',
         'h'      => 'година',
-        'hh'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d годину', '%d години', '%d годин'));
-        },
+        'hh'     => '%d годин',
         'd'      => 'день',
-        'dd'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d день', '%d дні', '%d днів'));
-        },
+        'dd'     => '%d днів',
         'M'      => 'місяць',
-        'MM'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d місяць', '%d місяці', '%d місяців'));
-        },
+        'MM'     => '%d місяців',
         'y'      => 'рік',
-        'yy'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d рік', '%d роки', '%d років'));
-        },
+        'yy'     => '%d років',
     ),
-    'ordinal'       => function ($number)
-    {
-        $n = $number % 100;
-        $k = $number % 10;
-        $ends = array('-ше', '-ге', '-тє', '-те', '-те', '-те', '-ме', '-ме', '-те', '-те');
-
-        if ($n >= 11 && $n <= 13)
-        {
-            return $number . '[th]';
-        }
-
-        if ($n != 13 && $k = 3) {
-            return $number . '[' . $ends[2] . ']';
-        }
-
-        return $number . '[' . $ends[$k] . ']';
-    },
+    'ordinal'       => '[th]',
     'week'          => array(
         'dow' => 1, // Monday is the first day of the week.
         'doy' => 4  // The week that contains Jan 4th is the first week of the year.

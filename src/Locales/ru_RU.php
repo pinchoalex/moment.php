@@ -14,34 +14,6 @@
  *
  * @return string
  */
-$getNumEnding = function ($number, array $endingArray)
-{
-    $number = $number % 100;
-
-    if ($number >= 11 && $number <= 19)
-    {
-        return $endingArray[2];
-    }
-
-    $i = $number % 10;
-
-    switch ($i)
-    {
-        case (1):
-            $ending = $endingArray[0];
-            break;
-        case (2):
-        case (3):
-        case (4):
-            $ending = $endingArray[1];
-            break;
-        default:
-            $ending = $endingArray[2];
-    }
-
-    return $ending;
-};
-
 return array(
     'months'            => explode('_', 'Января_Февраля_Марта_Апреля_Мая_Июня_Июля_Августа_Сентября_Октября_Ноября_Декабря'),
     'monthsNominative'  => explode('_', 'Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь'),
@@ -61,40 +33,19 @@ return array(
         'future' => 'через %s',
         'past'   => '%s назад',
         's'      => 'несколько секунд',
-        'ss'     => function ($number) use ($getNumEnding)
-        {
-           return $getNumEnding($number, array('%d секунду', '%d секунды', '%d секунд'));
-        },
+        'ss'     => '%d секунд',
         'm'      => 'минуту',
-        'mm'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d минуту', '%d минуты', '%d минут'));
-        },
+        'mm'     => '%d минут',
         'h'      => 'час',
-        'hh'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d час', '%d часа', '%d часов'));
-        },
+        'hh'     => '%d часов',
         'd'      => 'день',
-        'dd'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d день', '%d дня', '%d дней'));
-        },
+        'dd'     => '%d дней',
         'M'      => 'месяц',
-        'MM'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d месяц', '%d месяца', '%d месяцев'));
-        },
+        'MM'     => '%d месяцев',
         'y'      => 'год',
-        'yy'     => function ($number) use ($getNumEnding)
-        {
-            return $getNumEnding($number, array('%d год', '%d года', '%d лет'));
-        },
+        'yy'     => '%d лет',
     ),
-    'ordinal'       => function ($number)
-    {
-        return $number . 'е';
-    },
+    'ordinal'    => 'e',
     'week'          => array(
         'dow' => 1, // Monday is the first day of the week.
         'doy' => 4  // The week that contains Jan 4th is the first week of the year.
